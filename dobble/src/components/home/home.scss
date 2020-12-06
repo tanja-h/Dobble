@@ -1,0 +1,108 @@
+/* {
+    minion-yellow: #eedd44ff;
+    vegas-gold: #c3b047ff;
+    pearly-purple: #9c64a6ff;
+    maximum-purple: #623671ff;
+    smoky-black: #0f0b08ff;
+} */
+/* .home {
+    background-color: #EEDD44;
+} */
+
+$border: 1px solid #0f0b08ff;
+
+.input {
+    border: $border;
+    width: 200px;
+    height: 20px;
+}
+
+.btn {
+    border: $border;
+    background-color: #9C64A6;
+    height: 30px;
+    width: 100px;
+}
+
+h2,
+h2:visited {
+    color: #0f0b08ff;
+    align-items: center;
+    border-radius: 45%;
+    border: 3px solid #623671;
+    background-color: #9C64A6;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+.elements {
+    display: grid;
+    place-items: center;
+
+    .gameOptions {
+        border: $border;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 20vh;
+        width: 600px;
+
+        .join {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 20vh;
+            width: 200px;
+            
+            .input {
+                margin: 4px;
+                width: 130px;
+            }
+            
+            h2 {
+                margin: 4px;
+                margin: 0 auto;
+            }
+        }
+    }
+
+    img {
+        width: 200px;
+        // width: 100px;
+    }
+
+    h2 {
+        cursor: pointer;
+    }
+}
+
+.modal {
+    height: 20vh;
+    width: 50vh;
+    // background: rgb(238, 221, 68, 0.85);
+    background: rgb(238, 221, 68);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: $border;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .btn {
+            margin: 5px;
+        }
+    }
+
+}

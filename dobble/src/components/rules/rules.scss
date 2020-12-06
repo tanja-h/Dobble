@@ -1,0 +1,24 @@
+/* .rules {
+    background-color: #EEDD44;
+} */
+
+/* .list {
+    display: block;
+} */
+
+.list {
+    margin-right: 20px;
+    text-align: justify;
+
+    li {
+        margin-right: 20px;
+
+        p:nth-child(1) {
+            text-decoration: underline;
+            margin-bottom: 0;
+        }
+        p:nth-child(2) {
+            margin-top: 5px;
+        }
+    }
+}
