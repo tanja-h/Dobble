@@ -16,23 +16,7 @@ function Game({ location }) {
     const [gameStarted, setGameStarted] = useState(false);
     const [player, setPlayer] = useContext(PlayerContext);
     const [gameCode, setGameCode] = useState('');
-
-    const [players, setPlayers] = useState([]);
-    const [cards, setCards] = useState([]);
-
-    // const [gameState, setGameState] = useState({
-    //     players: [{
-    //         card: {},
-    //         score: 0
-    //     },
-    //     {
-    //         card: {},
-    //         score: 0
-    //     }],
-    //     deckOfCards: [],
-    //     gameActive: false
-    // });
-
+    const [gameState, setGameState] = useState(null);
 
     useEffect(() => {
         socket.emit('start', player, (error) => {
@@ -47,10 +31,9 @@ function Game({ location }) {
     }, [location]); //ENDPOINT, location.search
 
     socket.on('info', handleInfo);
-    socket.on('start1', handleStart);
     socket.on('gameCode', handleGameCode);
     socket.on('init', handleInit);
-
+    socket.on('gameState', handleGameState);
 
     function handleInfo(info) {
         console.log('info:', info);
@@ -61,29 +44,19 @@ function Game({ location }) {
     }
 
     function handleInit(initNumber) {
-        // console.log('init number', initNumber);
         setPlayer({ ...player, number: initNumber });
-        // console.log('init', player);s
     }
 
-    function handleStart(data) {
-        var pl = data.players; //array
-
-        // if (player.name === pl[1].name) {
-        //     //rotate players in the array so the main player is first in his list
-        //     pl = ([pl[1], pl[0]]);
-        // }
-
-        setPlayers(pl);
-        setCards(data.cards);
-        setGameStarted(true);
+    function handleGameState(gameState) {
+        setGameState(gameState);
+        if (gameState.gameActive) {
+            setGameStarted(true);
+        }
     }
 
     const handleDisconnect = () => {
-        socket.close();
-        setPlayers([]);
-        setCards([]);
         setGameStarted(false);
+        socket.close();
         console.log("handle disconnect - ", player.name);
     }
 
@@ -102,7 +75,7 @@ function Game({ location }) {
             <div>
                 {gameStarted ?
                     // <GameStarted socket={socket} players={players} newCards={cards} />
-                    <Slike socket={socket} players={players} newCards={cards} />
+                    <Slike socket={socket} gameState={gameState} />
                     :
                     <GameWaiting player={player} gameCode={gameCode} />
                 }

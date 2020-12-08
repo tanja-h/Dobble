@@ -1,25 +1,29 @@
-function initGame(newCards) {
-    const state = createGameState(newCards);
-    return state;
-}
+// function initGame(players, newCards) {
+//     const state = createGameState(players, newCards);
+//     return state;
+// }
+const { createNewDeck } = require("./Algorithm");
 
-function createGameState(cards) {
+function createGameState(playersArray) {
+    let newCards = createNewDeck();
+    const firstCards = newCards.splice(0, 2);
+    
     return {
         players: [{
-            card: cards[0],
+            name: playersArray[0].name,
+            card: firstCards[0],
             score: 0
         },
         {
-            card: cards[1],
+            name: playersArray[1].name,
+            card: firstCards[1],
             score: 0
         }],
-        deckOfCards: cards.splice(0,2),
+        deckOfCards: newCards,
         gameActive: true
     }
 }
 
-function getUpdatedCards() {
+function getUpdatedCards() {}
 
-}
-
-module.exports = { initGame, getUpdatedCards }
+module.exports = { createGameState, getUpdatedCards }

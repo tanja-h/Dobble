@@ -8,11 +8,10 @@ function Card({ card, handleGuess }) {
         <div className="card">
             {card.elements.map(element =>
                 <div className="card-element" key={element}>
-                    {/* {element} */}
                     <img
                         src={images[`${element}.png`]}
                         alt={element}
-                        onClick={handleGuess}
+                        onClick={() => handleGuess(element)}
                     />
                 </div>
             )}

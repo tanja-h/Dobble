@@ -31,7 +31,7 @@ const addPlayer = (data, roomName, id) => {
 
     let player = {
         name: data.name,
-        score: 0,
+        // score: 0,
         number: -1,
         // room: roomName,
         room: data.room,

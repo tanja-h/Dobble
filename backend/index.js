@@ -2,24 +2,26 @@ const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 
-const { addP, addPlayer, removePlayer, getPlayersInRoom, getPlayersNamesInRoom } = require('./Players');
-const { createNewDeck } = require('./Algorithm');
-const { makeId } = require('./Util');
-
-const PORT = process.env.PORT || 5000;
-
-const router = require('./router');
-const { initGame } = require('./Game');
-
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
+const PORT = process.env.PORT || 5000;
+const router = require('./router');
+
+const { addP, addPlayer, removePlayer, getPlayersInRoom, getPlayersNamesInRoom } = require('./Players');
+const { createNewDeck } = require('./Algorithm');
+const { makeId } = require('./Util');
+const { createGameState } = require('./Game');
+
+const state = {};
 
 io.on('connection', (socket) => {
     console.log('new socket connection -', socket.id);
 
     socket.on('start', handleStart);
     socket.on('disconnect', handleDisconnect);
+    socket.on('guessElement', handleGuessElement);
 
     socket.on('newGame', handleNewGame);
     socket.on('joinGame', handleJoinGame);
@@ -33,16 +35,18 @@ io.on('connection', (socket) => {
         }
 
         socket.join(player.room);
-        console.log(`Player ${player.name} has joined the game room ${player.room}`);
         socket.broadcast.to(player.room).emit('info', `Player ${player.name} has joined the game!`);
         socket.emit('gameCode', room);
         socket.emit('init', player.number);
-        if (getPlayersInRoom(player.room).length === 2) {
-            const newDeckOfCards = createNewDeck();
-            const state = initGame(newDeckOfCards);
-            
-            console.log('names', getPlayersInRoom(player.room));
-            io.to(player.room).emit('start1', { players: getPlayersInRoom(player.room), cards: newDeckOfCards });
+        console.log(`Player ${player.name} has joined the game room ${player.room}`);
+
+        const players = getPlayersInRoom(player.room);
+        if (players.length === 2) {
+            const gameState = createGameState(players);
+            state[player.room] = gameState;
+
+            io.to(player.room).emit('gameState', gameState);
+            console.log('game started');
         }
     }
 
@@ -86,11 +90,16 @@ io.on('connection', (socket) => {
     function handleDisconnect() {
         const player = removePlayer(socket.id);
         if (player) {
-            console.log(`client socket disconnected`, player.name);
+            console.log(`client disconnected`, player.name);
         } else {
             console.log('Socket connection closed', socket.id);
         }
     }
+
+    function handleGuessElement(element) {
+        console.log('guess - ', element);
+    }
+
 });
 
 app.use(router);
