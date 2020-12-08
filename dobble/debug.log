@@ -31,3 +31,5 @@
 [1206/181748.943:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tanja\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\a64a0e60-89e6-4ebb-963c-d218a8aec70d: The system cannot find the path specified. (0x3)
 [1206/181748.944:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tanja\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\806d3823-830e-4986-8993-623399fa234d: The system cannot find the path specified. (0x3)
 [1206/181748.945:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Tanja\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\e3131832-bbb6-483a-9eed-87c5f90441ad: The system cannot find the path specified. (0x3)
+[1207/142612.641:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1208/165019.582:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

@@ -14,29 +14,62 @@ const addP = (roomName, id, name, number) => {
 const getPlayersInRoom = (room) => players.filter((player) => player.room === room);
 
 const addPlayer = (data, roomName, id) => {
-    if (getPlayersInRoom(roomName).length < 2) {
-        // const player = { name, room, socketId };
-        const player = {
-            name: data.name,
-            // room: roomName,
-            room: data.room,
-            id: id
-        };
+    let pl = getPlayersInRoom(data.room);
 
-        const existingPlayer = players.find((p) => p.room === player.room && p.name === player.name);
-        if (existingPlayer) {
-            return {
-                error: 'Name is already taken. Choose a different name.'
-            }
-        }
-
-        players.push(player);
-        return player;
-    } else {
+    if (pl.length === 2) {
         return {
-            error: 'The game already has two players'
+            error: 'The game already has two players.'
         }
     }
+
+    const existingPlayer = pl.find(p => p.name === data.name);
+    if (existingPlayer) {
+        return {
+            error: 'Name is already taken. Choose a different name.'
+        }
+    }
+
+    let player = {
+        name: data.name,
+        score: 0,
+        number: -1,
+        // room: roomName,
+        room: data.room,
+        id: id
+    };
+
+    if (pl.length === 0) {
+        player.number = 1;
+    } else {
+        player.number = 2;
+    }
+    players.push(player);
+    return player;
+
+    // if (pl.length < 2) {
+    //     // const player = { name, room, socketId };
+    //     const player = {
+    //         name: data.name,
+    //         score: 0,
+    //         // room: roomName,
+    //         room: data.room,
+    //         id: id
+    //     };
+
+    //     const existingPlayer = players.find((p) => p.room === player.room && p.name === player.name);
+    //     if (existingPlayer) {
+    //         return {
+    //             error: 'Name is already taken. Choose a different name.'
+    //         }
+    //     }
+
+    //     players.push(player);
+    //     return player;
+    // } else {
+    //     return {
+    //         error: 'The game already has two players'
+    //     }
+    // }
 }
 
 const removePlayer = (id) => {

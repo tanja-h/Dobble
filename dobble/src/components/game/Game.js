@@ -4,6 +4,7 @@ import { PlayerContext } from '../../context/PlayerContext';
 import io from 'socket.io-client';
 import GameStarted from './GameStarted';
 import GameWaiting from './GameWaiting';
+import Slike from '../cards/Slike';
 
 let socket;
 
@@ -33,74 +34,82 @@ function Game({ location }) {
     // });
 
 
-useEffect(() => {
-    socket.emit('start', player, (error) => {
-        alert(error);
-        history.push('/');
-    });
+    useEffect(() => {
+        socket.emit('start', player, (error) => {
+            alert(error);
+            history.push('/');
+        });
 
-    return () => {
-        handleDisconnect();
+        return () => {
+            handleDisconnect();
+        }
+
+    }, [location]); //ENDPOINT, location.search
+
+    socket.on('info', handleInfo);
+    socket.on('start1', handleStart);
+    socket.on('gameCode', handleGameCode);
+    socket.on('init', handleInit);
+
+
+    function handleInfo(info) {
+        console.log('info:', info);
     }
 
-}, [location]); //ENDPOINT, location.search
-
-socket.on('info', handleInfo);
-socket.on('start1', handleStart);
-socket.on('gameCode', handleGameCode);
-
-
-function handleInfo(info) {
-    console.log('info:', info);
-}
-
-function handleGameCode(gameCode) {
-    setGameCode(gameCode);
-}
-
-function handleStart(data) {
-    var pl = data.players; //array
-
-    if (player.name === pl[1].name) {
-        //rotate players in the array so the main player is first in his list
-        pl = ([pl[1], pl[0]]);
+    function handleGameCode(gameCode) {
+        setGameCode(gameCode);
     }
 
-    setPlayers(pl);
-    setCards(data.cards);
-    setGameStarted(true);
-}
+    function handleInit(initNumber) {
+        // console.log('init number', initNumber);
+        setPlayer({ ...player, number: initNumber });
+        // console.log('init', player);s
+    }
 
-const handleDisconnect = () => {
-    socket.close();
-    setPlayers([]);
-    setCards([]);
-    setGameStarted(false);
-    console.log("handle disconnect - ", player.name);
-}
+    function handleStart(data) {
+        var pl = data.players; //array
+
+        // if (player.name === pl[1].name) {
+        //     //rotate players in the array so the main player is first in his list
+        //     pl = ([pl[1], pl[0]]);
+        // }
+
+        setPlayers(pl);
+        setCards(data.cards);
+        setGameStarted(true);
+    }
+
+    const handleDisconnect = () => {
+        socket.close();
+        setPlayers([]);
+        setCards([]);
+        setGameStarted(false);
+        console.log("handle disconnect - ", player.name);
+    }
 
 
-return (
-    <div className="Game">
-        Game
-        <hr />
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-        </ul>
-        <hr />
+    return (
+        <div className="Game">
+            Game
+            <hr />
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+            </ul>
+            <hr />
 
-        <div>
-            {gameStarted ?
-                <GameStarted socket={socket} players={players} newCards={cards} />
-                :
-                <GameWaiting player={player} gameCode={gameCode} />
-            }
+            <div>
+                {gameStarted ?
+                    // <GameStarted socket={socket} players={players} newCards={cards} />
+                    <Slike socket={socket} players={players} newCards={cards} />
+                    :
+                    <GameWaiting player={player} gameCode={gameCode} />
+                }
+            </div>
+
         </div>
-
-    </div>
-);
+    );
 }
 
 export default Game;

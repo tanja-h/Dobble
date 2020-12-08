@@ -12,7 +12,7 @@ Modal.setAppElement('#root');
 // let socket1;
 
 function Home({ socket1 }) {
-    console.log("socket1 u home", socket1);
+    // console.log("socket1 u home", socket1);
     // const ENDPOINT = 'localhost:5000';
     // socket1 = io(ENDPOINT);
     const [gameCodeInput, setGameCodeInput] = useState('');
@@ -24,8 +24,8 @@ function Home({ socket1 }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const inputRef = useRef();
 
-    socket1.on('gameCode', handleGameCode);
-    socket1.on('init', handleInit);
+    // socket1.on('gameCode', handleGameCode);
+    // socket1.on('init', handleInit);
 
 
     const handleOpenModule = () => {
@@ -56,10 +56,10 @@ function Home({ socket1 }) {
     }
 
     const handleNewGame = () => {
-        socket1.emit('newGame', player, (error) => {
-            alert(error);
-            // history.push('/');
-        });
+        // socket1.emit('newGame', player, (error) => {
+        //     alert(error);
+        //     // history.push('/');
+        // });
     }
 
     function handleGameCode(gameCode) {
@@ -93,10 +93,10 @@ function Home({ socket1 }) {
     const handleJoin = () => {
         setPlayer({ ...player, room: gameCodeInput });
         console.log("player u handleJoinGame", player);
-        socket1.emit('joinGame', player, (error) => {
-            alert(error);
-            // history.push('/');
-        });
+        // socket1.emit('joinGame', player, (error) => {
+        //     alert(error);
+        //     // history.push('/');
+        // });
     }
 
     return (

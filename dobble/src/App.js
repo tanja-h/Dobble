@@ -7,14 +7,14 @@ import Game from './components/game/Game';
 import Slike from './components/cards/Slike';
 import { PlayerContext } from './context/PlayerContext';
 import Gamejoin from './components/game/Gamejoin';
+// import io from 'socket.io-client';
 
-import io from 'socket.io-client';
 let socket1;
-const ENDPOINT = 'localhost:5000';
-socket1 = io(ENDPOINT);
+// const ENDPOINT = 'localhost:5000';
+// socket1 = io(ENDPOINT);
 
 function App() {
-  console.log("socket1 u app", socket1);
+  // console.log("socket1 u app", socket1);
 
   const [player, setPlayer] = useState({
     name: 'player 1',

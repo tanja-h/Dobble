@@ -9,6 +9,7 @@ const { makeId } = require('./Util');
 const PORT = process.env.PORT || 5000;
 
 const router = require('./router');
+const { initGame } = require('./Game');
 
 const app = express();
 const server = http.createServer(app);
@@ -35,9 +36,12 @@ io.on('connection', (socket) => {
         console.log(`Player ${player.name} has joined the game room ${player.room}`);
         socket.broadcast.to(player.room).emit('info', `Player ${player.name} has joined the game!`);
         socket.emit('gameCode', room);
+        socket.emit('init', player.number);
         if (getPlayersInRoom(player.room).length === 2) {
             const newDeckOfCards = createNewDeck();
-            console.log('names', getPlayersNamesInRoom(player.room));
+            const state = initGame(newDeckOfCards);
+            
+            console.log('names', getPlayersInRoom(player.room));
             io.to(player.room).emit('start1', { players: getPlayersInRoom(player.room), cards: newDeckOfCards });
         }
     }

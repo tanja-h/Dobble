@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { algorithm, shuffleCards } from './algorithm';
+import React, { useState, useEffect, useContext } from 'react';
 import Card from './Card';
+import { PlayerContext } from '../../context/PlayerContext';
+// import { algorithm, shuffleCards } from './algorithm';
 
 import './slike.scss';
 
-function Slike() {
+function Slike({ socket, players, newCards }) {
     const [lastCard, setLastCard] = useState(false);
     const [cards, setCards] = useState(SAMPLE_CARDS);
 
-    // useEffect(() => {
-    //     setCards(algorithm());
-    // }, [])
+    const [player, setPlayer] = useContext(PlayerContext);
+
+    useEffect(() => {
+        setCards(newCards);
+        console.log("socket id", socket.id);
+    }, [])
+
+    const handleGuess = () => {
+        // socket.emit('guess', );
+        console.log("klik");
+    }
 
     return (
         // <div>
-        //     <button onClick={shuffleCards}>Shuffle cards</button>
         //     <div className="card-grid">
         //         {cards.map(card => (
         //             <Card card={card} key={card.id} />
@@ -24,20 +32,19 @@ function Slike() {
 
         <div className="container">
             <div className="opponent">
-                <div className="name">Opponent</div>
+                <div className="name">Opponent - {players[2 - player.number].name}</div>
                 <Card card={cards[1]} />
-                <div className="score">score: 13</div>
+                <div className="score">score: {players[2 - player.number].score}</div>
             </div>
             <div className="deck-of-cards">
-                <Card card={cards[2]} />
+                <Card card={cards[2]} handleGuess={handleGuess}/>
                 {lastCard ? null : <div className="deck"></div>}
             </div>
             <div className="main-player">
-                <div className="name">main player</div>
+                <div className="name">Main player - {players[player.number - 1].name}</div>
                 <Card card={cards[0]} />
-                <div className="score">score: 10</div>
+                <div className="score">score: {players[player.number - 1].score}</div>
             </div>
-            <button onClick={() => setCards(shuffleCards(cards))}>Shuffle cards</button>
         </div>
     );
 }
