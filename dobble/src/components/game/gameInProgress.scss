@@ -1,0 +1,162 @@
+@mixin card-background {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    background-color: white;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+@mixin scale {
+    //card-background and elements' size scaled by 1.15
+    width: 218.5px;
+    height: 218.5px;
+
+    .card-element {
+        width: 48.3px;
+        height: 48.3px;
+    }
+}
+
+$black-border: 1px solid black;
+
+.card {
+    @include card-background();
+
+    .card-element {
+        display: inline-block;
+        position: absolute;
+        width: 42px;
+        height: 42px;
+
+        img {
+            width: 42px;
+            height: 42px;
+        }
+
+        &:nth-child(1) {
+            // margin: auto;
+            // top: 0;
+            // bottom: 0;
+            // left: 0;
+            // right: 0;
+            top: 75px;
+            left: 75px;
+        }
+
+        &:nth-child(2) {
+            top: 13px;
+            left: 76px;
+        }
+
+        &:nth-child(3) {
+            top: 37px;
+            left: 124px;
+        }
+
+        &:nth-child(4) {
+            top: 88px;
+            left: 135px;
+        }
+
+        &:nth-child(5) {
+            top: 133px;
+            left: 97px;
+        }
+
+        &:nth-child(6) {
+            top: 130px;
+            left: 45px;
+        }
+
+        &:nth-child(7) {
+            top: 85px;
+            left: 15px;
+        }
+
+        &:nth-child(8) {
+            top: 34px;
+            left: 25px;
+        }
+    }
+}
+
+.container {
+    min-height: 100vh;
+    min-width: 87vh;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-around;
+
+    .opponent,
+    .deck-of-cards,
+    .main-player {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .opponent,
+    .main-player {
+        height: 32vh;
+        background-color: #9c64a6;
+
+        .name,
+        .score {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            width: 160px;
+            background-color: #AC7DB5;
+            border: $black-border;
+        }
+
+        .name {
+            margin-left: 10px;
+            // border-bottom: $black-border;
+        }
+
+        .score {
+            margin-right: 10px;
+        }
+
+    }
+
+    .deck-of-cards {
+        height: 36vh;
+        background-color: yellow;
+        padding: 0, 170px;
+        z-index: 0;
+
+        .card,
+        .card-element {
+            transform: scale(1.15);
+        }
+
+        .card {
+            position: absolute;
+            z-index: 1;
+
+            .card-element img {
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .deck {
+            @include card-background();
+            @include scale();
+            position: absolute;
+            background-color: lightgray;
+            // border: $black-border;
+            transform: translateX(-10px);
+            z-index: -1;
+        }
+    }
+
+}
