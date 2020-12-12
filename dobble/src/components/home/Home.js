@@ -1,32 +1,20 @@
 import React, { useState, useContext, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import Logo from './logo.png';
+import { Link } from 'react-router-dom';
+import Logo from '../../images/logo.png';
 import Modal from 'react-modal';
-// import io from 'socket.io-client';
 
 import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
 
 Modal.setAppElement('#root');
 
-// let socket1;
-
-function Home({ socket1 }) {
-    // console.log("socket1 u home", socket1);
-    // const ENDPOINT = 'localhost:5000';
-    // socket1 = io(ENDPOINT);
+function Home() {
+    const [player, setPlayer] = useContext(PlayerContext);
     const [gameCodeInput, setGameCodeInput] = useState('');
 
-    const [player, setPlayer] = useContext(PlayerContext);
-    const history = useHistory();
-
-    const [inputName, setInputName] = useState(player.name);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [inputName, setInputName] = useState(player.name);
     const inputRef = useRef();
-
-    // socket1.on('gameCode', handleGameCode);
-    // socket1.on('init', handleInit);
-
 
     const handleOpenModule = () => {
         setModalIsOpen(true);
@@ -39,7 +27,6 @@ function Home({ socket1 }) {
     const handleSave = () => {
         setPlayer({ ...player, name: inputName });
         handleCancel();
-        console.log(player);
     }
 
     const handleCancel = () => {
@@ -55,50 +42,6 @@ function Home({ socket1 }) {
         }
     }
 
-    const handleNewGame = () => {
-        // socket1.emit('newGame', player, (error) => {
-        //     alert(error);
-        //     // history.push('/');
-        // });
-    }
-
-    function handleGameCode(gameCode) {
-        // setGameCode(gameCode);
-        console.log("gameCode u home", gameCode);
-        setPlayer({ ...player, room: gameCode });
-
-        history.push({
-            pathname: '/gamejoin'
-            // gamejoinProps: {
-            // gameCode: gameCode
-            // socket: socket1
-            // }
-        });
-    }
-
-    function handleInit(number) {
-        setPlayer({ ...player, number: number });
-        if (number === 2) {
-
-            history.push({
-                pathname: '/gamejoin',
-                gamejoinProps: {
-                    gameCode: player.room
-                    // socket: socket1
-                }
-            });
-        }
-    }
-
-    const handleJoin = () => {
-        setPlayer({ ...player, room: gameCodeInput });
-        console.log("player u handleJoinGame", player);
-        // socket1.emit('joinGame', player, (error) => {
-        //     alert(error);
-        //     // history.push('/');
-        // });
-    }
-
     return (
         <div className="home">
             Home
@@ -110,10 +53,9 @@ function Home({ socket1 }) {
                     <h2>Rules</h2>
                 </Link>
                 <div className="gameOptions">
-                    <Link to="/game">
-                        <h2>Start</h2>
+                    <Link to='/game'>
+                        <h2>Start New Game</h2>
                     </Link>
-                    <h2 onClick={handleNewGame}>NEW GAME</h2>
                     <p>OR</p>
                     <div className="join">
                         <input
@@ -122,7 +64,12 @@ function Home({ socket1 }) {
                             placeholder="Enter Game Code"
                             onChange={e => setGameCodeInput(e.target.value)}
                         />
-                        <h2 onClick={handleJoin}>Join Game</h2>
+                        <Link to={{
+                            pathname: '/game',
+                            gameCodeInput: gameCodeInput
+                        }}>
+                            <h2>Join Game</h2>
+                        </Link>
                     </div>
                 </div>
                 <h3>Hello {player.name}</h3>

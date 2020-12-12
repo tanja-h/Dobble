@@ -9,59 +9,41 @@ const io = socketio(server);
 const PORT = process.env.PORT || 5000;
 const router = require('./router');
 
-const { addP, addPlayer, removePlayer, getPlayersInRoom, getPlayersNamesInRoom } = require('./Players');
-const { createNewDeck } = require('./Algorithm');
+const { addPlayer, removePlayer, getPlayer, getPlayersInRoom } = require('./Players');
 const { makeId } = require('./Util');
-const { createGameState } = require('./Game');
+const { createGameState, findMatchingElement, updateGameState } = require('./Game');
 
 const state = {};
 
 io.on('connection', (socket) => {
     console.log('new socket connection -', socket.id);
 
-    socket.on('start', handleStart);
+    socket.on('newGame', handleNewGame);
+    socket.on('joinGame', handleJoinGame);
     socket.on('disconnect', handleDisconnect);
     socket.on('guessElement', handleGuessElement);
 
-    socket.on('newGame', handleNewGame);
-    socket.on('joinGame', handleJoinGame);
 
-    function handleStart(data, callback) {
-        let room = makeId(6);
-        const player = addPlayer(data, room, socket.id);
-        if (player.error) {
-            console.log(player.error);
-            return callback(player.error);
+    function handleNewGame(playerName, callback) {
+        console.log("data", playerName);
+        let roomName = makeId(6);
+        if (getPlayersInRoom(roomName).length > 0) {
+            return callback('Internal server error! Please try again.');
         }
 
-        socket.join(player.room);
-        socket.broadcast.to(player.room).emit('info', `Player ${player.name} has joined the game!`);
-        socket.emit('gameCode', room);
-        socket.emit('init', player.number);
-        console.log(`Player ${player.name} has joined the game room ${player.room}`);
-
-        const players = getPlayersInRoom(player.room);
-        if (players.length === 2) {
-            const gameState = createGameState(players);
-            state[player.room] = gameState;
-
-            io.to(player.room).emit('gameState', gameState);
-            console.log('game started');
-        }
-    }
-
-    function handleNewGame(player) {
-        let room = makeId(6);
-        console.log("room u newGame", room);
-        socket.emit('gameCode', room);
-        addP(room, socket.id, player.name, 1);
+        addPlayer(playerName, 1, roomName, socket.id);
+        socket.join(roomName);
+        console.log(`Player ${playerName} has joined the game room ${roomName}`);
+        socket.emit('gameCode', roomName);
         socket.emit('init', 1);
     }
 
-    function handleJoinGame(player, callback) {
-        let room = player.room;
-        // let p = data.player;
-        let pl = getPlayersInRoom(room);
+    function handleJoinGame(data, callback) {
+        console.log("data", data);
+        let roomName = data.gameCode;
+        let playerName = data.playerName;
+        let pl = getPlayersInRoom(roomName);
+
         if (pl.length === 0) {
             return callback('Uknown game code.');
         }
@@ -70,21 +52,21 @@ io.on('connection', (socket) => {
             return callback('This game is already in progress.');
         }
 
-        if (pl.find(p => player.name === p.name)) {
+        if (pl.find(p => p.name === playerName)) {
             return callback('Name is already taken. Choose a different name.');
         }
 
-        addP(room, socket.id, p.name, 2);
+        addPlayer(playerName, 2, roomName, socket.id);
+        socket.join(roomName);
+        socket.broadcast.to(roomName).emit('info', `Player ${playerName} has joined the game!`);
         socket.emit('init', 2);
+        console.log(`Player ${playerName} has joined the game room ${roomName}`);
 
-        const newDeckOfCards = createNewDeck();
-        console.log('players', getPlayersInRoom(room));
-        io.to(room).emit('start1',
-            {
-                players: getPlayersInRoom(room),
-                cards: newDeckOfCards
-            });
-        console.log("join kraj");
+        pl = getPlayersInRoom(roomName);    //updated list because of the player no. 2
+        const gameState = createGameState(pl);
+        state[roomName] = gameState;
+        io.to(roomName).emit('gameState', gameState);
+        console.log('game started');
     }
 
     function handleDisconnect() {
@@ -97,7 +79,25 @@ io.on('connection', (socket) => {
     }
 
     function handleGuessElement(element) {
-        console.log('guess - ', element);
+        const player = getPlayer(socket.id);
+        const gameState = state[player.room];
+
+        const centralCard = gameState.deckOfCards[0];
+        const playerCard = gameState.players[player.number - 1].card;
+
+        if (element == findMatchingElement(centralCard, playerCard)) {
+            socket.emit('info', 'match found');
+            game = updateGameState(gameState, player.number - 1);
+
+            if (game.winner) {
+                console.log('winner', game.winner);
+                io.to(player.room).emit('gameOver', game.winner);
+            } else {
+                io.to(player.room).emit('gameState', game.gameState);
+            }
+        } else {
+            socket.emit('info', 'try again');
+        }
     }
 
 });

@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { PlayerContext } from '../../context/PlayerContext';
 import io from 'socket.io-client';
-import GameStarted from './GameStarted';
 import GameWaiting from './GameWaiting';
-import Slike from '../cards/Slike';
+import GameInProgress from './GameInProgress';
 
 let socket;
 
 function Game({ location }) {
     const ENDPOINT = 'localhost:5000';
-    socket = io(ENDPOINT);
     const history = useHistory();
 
     const [gameStarted, setGameStarted] = useState(false);
@@ -19,38 +17,61 @@ function Game({ location }) {
     const [gameState, setGameState] = useState(null);
 
     useEffect(() => {
-        socket.emit('start', player, (error) => {
-            alert(error);
-            history.push('/');
-        });
+        socket = io(ENDPOINT);
+        
+        if (!location.gameCodeInput) {
+            socket.emit('newGame', player.name, (error) => {
+                alert(error);
+                history.push('/');
+            });
+        } else {
+            socket.emit('joinGame', { playerName: player.name, gameCode: location.gameCodeInput }, (error) => {
+                alert(error);
+                history.push('/');
+            });
+        }
 
         return () => {
             handleDisconnect();
         }
 
-    }, [location]); //ENDPOINT, location.search
+    }, [location, ENDPOINT]);
 
-    socket.on('info', handleInfo);
-    socket.on('gameCode', handleGameCode);
-    socket.on('init', handleInit);
-    socket.on('gameState', handleGameState);
+    useEffect(() => {
+        socket.on('info', handleInfo);
+        socket.on('gameCode', handleNewGameCode);
+        socket.on('init', handleInit);
+        socket.on('gameState', handleGameState);
+        socket.on('gameOver', handleGameOver);
+    }, [])
 
-    function handleInfo(info) {
+    const handleInfo = (info) => {
         console.log('info:', info);
     }
 
-    function handleGameCode(gameCode) {
+    const handleNewGameCode = (gameCode) => {
         setGameCode(gameCode);
     }
 
-    function handleInit(initNumber) {
+    const handleInit = (initNumber) => {
         setPlayer({ ...player, number: initNumber });
+        console.log('init number', initNumber);
     }
 
-    function handleGameState(gameState) {
+    const handleGameState = (gameState) => {
         setGameState(gameState);
-        if (gameState.gameActive) {
+        console.log('player', player);
+        if (gameState.gameStatus === 'started') {
             setGameStarted(true);
+        }
+    }
+
+    const handleGameOver = (winner) => {
+
+        if (winner === player.number) {
+            alert('YOU WON!');
+        } else {
+            alert('YOU LOST!');
         }
     }
 
@@ -74,8 +95,7 @@ function Game({ location }) {
 
             <div>
                 {gameStarted ?
-                    // <GameStarted socket={socket} players={players} newCards={cards} />
-                    <Slike socket={socket} gameState={gameState} />
+                    <GameInProgress socket={socket} player ={player} gameState={gameState} />
                     :
                     <GameWaiting player={player} gameCode={gameCode} />
                 }
