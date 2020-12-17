@@ -25,7 +25,9 @@ function Home() {
     }
 
     const handleSave = () => {
-        setPlayer({ ...player, name: inputName });
+        if (inputName.trim() !== '' && inputName.length !== 0) {
+            setPlayer({ ...player, name: inputName });
+        }
         handleCancel();
     }
 
