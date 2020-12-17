@@ -73,6 +73,11 @@ io.on('connection', (socket) => {
         const player = removePlayer(socket.id);
         if (player) {
             console.log(`client disconnected`, player.name);
+            io.to(player.room).emit('info', `Player ${player.name} has left the game!`);
+
+            if (state[player.room]) {
+                delete state[player.room];
+            }
         } else {
             console.log('Socket connection closed', socket.id);
         }
@@ -88,13 +93,16 @@ io.on('connection', (socket) => {
         if (element == findMatchingElement(centralCard, playerCard)) {
             socket.emit('info', 'match found');
             game = updateGameState(gameState, player.number - 1);
+            console.log('gameState', game.players, game.gameStatus, game.winner);
+            io.to(player.room).emit('gameState', game);
 
-            if (game.winner) {
-                console.log('winner', game.winner);
-                io.to(player.room).emit('gameOver', game.winner);
-            } else {
-                io.to(player.room).emit('gameState', game.gameState);
-            }
+            // if (game.winner) {
+            //     console.log('winner', game.winner);
+            //     io.to(player.room).emit('gameState', game);
+            //     // io.to(player.room).emit('gameOver', game.winner);
+            // } else {
+            //     io.to(player.room).emit('gameState', game);
+            // }
         } else {
             socket.emit('info', 'try again');
         }

@@ -1,15 +1,21 @@
  .App {
    min-height: 100vh;
+   min-width: 100%;
    background: rgb(238, 221, 68);
    background: linear-gradient(180deg,
        rgba(238, 221, 68, 1) 24%,
        rgba(156, 100, 166, 1) 79%,
        rgba(98, 54, 113, 1) 96%);
-   background-repeat: no-repeat;
-   background-attachment: fixed;
+   /* background-repeat: no-repeat; */
+   /* background-attachment: fixed; */
    /* background-color: #EEDD44; */
    /* text-align: center; */
  }
+
+ /* @media screen and (max-width: 480px) {
+   .App {
+     background-color: blue;
+   } */
 
  /* .App-logo {
   height: 40vmin;

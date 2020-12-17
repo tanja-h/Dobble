@@ -41,12 +41,12 @@ h2:visited {
     place-items: center;
 
     .gameOptions {
-        border: $border;
+        // border: $border;
         display: flex;
         justify-content: space-around;
         align-items: center;
         height: 20vh;
-        width: 600px;
+        // min-width: 600px;
 
         .join {
             display: flex;
@@ -69,7 +69,7 @@ h2:visited {
     }
 
     img {
-        width: 200px;
+        width: 150px;
         // width: 100px;
     }
 
@@ -106,3 +106,4 @@ h2:visited {
     }
 
 }
+

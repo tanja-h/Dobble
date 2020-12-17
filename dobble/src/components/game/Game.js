@@ -8,7 +8,7 @@ import GameInProgress from './GameInProgress';
 let socket;
 
 function Game({ location }) {
-    const ENDPOINT = 'localhost:5000';
+    const ENDPOINT = '192.168.0.35:5000';
     const history = useHistory();
 
     const [gameStarted, setGameStarted] = useState(false);
@@ -42,11 +42,33 @@ function Game({ location }) {
         socket.on('gameCode', handleNewGameCode);
         socket.on('init', handleInit);
         socket.on('gameState', handleGameState);
-        socket.on('gameOver', handleGameOver);
     }, [])
 
+    useEffect(() => {
+        console.log('player', player);
+        console.log('state pre if', gameState);
+        if (gameState && gameState.gameStatus === 'started') {
+            setGameStarted(true);
+        }
+        else if (gameState && gameState.gameStatus === 'finished') {
+            console.log('status finished', gameState.gameStatus);
+            console.log('winner', gameState.winner);
+            console.log('player number', player.number);
+            if (gameState.winner === player.number) {
+                alert('YOU WON!');
+            } else {
+                alert('YOU LOST!');
+            }
+        }
+    }, [gameState, player]);
+
     const handleInfo = (info) => {
-        console.log('info:', info);
+        if (info.includes('has left the game')) {
+            alert(info);
+            history.push('/');
+        } else {
+            console.log('info:', info);
+        }
     }
 
     const handleNewGameCode = (gameCode) => {
@@ -58,21 +80,8 @@ function Game({ location }) {
         console.log('init number', initNumber);
     }
 
-    const handleGameState = (gameState) => {
-        setGameState(gameState);
-        console.log('player', player);
-        if (gameState.gameStatus === 'started') {
-            setGameStarted(true);
-        }
-    }
-
-    const handleGameOver = (winner) => {
-
-        if (winner === player.number) {
-            alert('YOU WON!');
-        } else {
-            alert('YOU LOST!');
-        }
+    const handleGameState = (game) => {
+        setGameState(game);
     }
 
     const handleDisconnect = () => {

@@ -17,7 +17,7 @@ function GameInProgress({ socket, player, gameState }) {
         console.log('guess', element);
         socket.emit('guessElement', element);
     }
-    
+
     const handleDisableGuessing = (element) => {
         console.log('wrong deck', element);
     }
@@ -30,7 +30,9 @@ function GameInProgress({ socket, player, gameState }) {
                 <div className="score">score: {gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards">
-                <Card card={gameState.deckOfCards[0]} handleGuess={handleGuess} />
+                <Card
+                    card={gameState.deckOfCards[0]}
+                    handleGuess={gameState.gameStatus === 'finished' ? handleDisableGuessing : handleGuess} />
                 {lastCard ? null : <div className="deck"></div>}
             </div>
             <div className="main-player">
@@ -44,18 +46,18 @@ function GameInProgress({ socket, player, gameState }) {
 
 // const [cards, setCards] = useState(SAMPLE_CARDS);
 // const SAMPLE_CARDS = [
-    //     {
-        //         id: 0,
-        //         elements: [2, 3, 4, 5, 1, 6, 7, 8]
-        //     },
-        //     {
-            //         id: 1,
-            //         elements: [9, 10, 11, 12, 13, 14, 15, 1]
-            //     },
-            //     {
-                //         id: 2,
-                //         elements: [16, 17, 1, 18, 19, 20, 21, 22]
-                //     }
+//     {
+//         id: 0,
+//         elements: [2, 3, 4, 5, 1, 6, 7, 8]
+//     },
+//     {
+//         id: 1,
+//         elements: [9, 10, 11, 12, 13, 14, 15, 1]
+//     },
+//     {
+//         id: 2,
+//         elements: [16, 17, 1, 18, 19, 20, 21, 22]
+//     }
 // ]
 
 export default GameInProgress

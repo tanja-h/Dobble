@@ -13,8 +13,6 @@ function App() {
     number: 0
   });
 
-  // const [player, setPlayer] = useState('Player 1');
-
   const ctxPlayer = [player, setPlayer];
 
   return (

@@ -30,7 +30,8 @@ function Rules() {
                     <p>Instructions</p>
                     <p>Each player is dealt one card facing up. The remaining cards are in the middle facing up.
                     The cards are drawn from that pile. How to play? Players try to spot the same symbol on their
-                    card and the card on the central pile. As soon as one player sees it, he clicks on it and gets
+                    card and the card on the central pile. As soon as one player sees it, he clicks on the central
+                    card and gets
                     a card from the central pile above his card. Now the player looks at his new card at the top
                     and looks for the same symbol on the new center card. The game lasts until all cards from
                     the middle are used up. The player who collects the most cards wins.</p>

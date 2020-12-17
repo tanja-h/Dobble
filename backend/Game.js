@@ -16,7 +16,8 @@ function createGameState(playersArray) {
             score: 0
         }],
         deckOfCards: newCards,
-        gameStatus: 'started'
+        gameStatus: 'started',
+        winner: null
     }
 }
 
@@ -34,15 +35,20 @@ function findMatchingElement(centralCard, playerCard) {
 }
 
 function updateGameState(gameState, playerIndex) {
+    gameState.players[playerIndex].score += 1;
+
+    // gameState.gameStatus = 'finished';
+    // gameState.winner = playerIndex + 1;
+
     if (gameState.deckOfCards.length == 1) {
-        const winner = gameState.players[0].score > gameState.players[1].score ? 1 : 2;
-        return { winner };
+        gameState.gameStatus = 'finished';
+        gameState.winner = gameState.players[0].score > gameState.players[1].score ? 1 : 2;
+    } else {
+        gameState.players[playerIndex].card = gameState.deckOfCards.shift();
+        gameState.gameStatus = 'active';
     }
 
-    gameState.players[playerIndex].card = gameState.deckOfCards.shift();
-    gameState.players[playerIndex].score += 1;
-    gameState.gameState = 'active';
-    return { gameState };
+    return gameState;
 }
 
 module.exports = { createGameState, findMatchingElement, updateGameState }
