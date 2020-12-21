@@ -5,19 +5,21 @@ import Modal from 'react-modal';
 
 import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
+import Modal1 from '../modal/Modal';
 
 Modal.setAppElement('#root');
+// Modal1.setAppElement('#root');
 
 function Home() {
     const [player, setPlayer] = useContext(PlayerContext);
     const [gameCodeInput, setGameCodeInput] = useState('');
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const [inputName, setInputName] = useState(player.name);
     const inputRef = useRef();
 
     const handleOpenModule = () => {
-        setModalIsOpen(true);
+        setModalOpen(true);
     }
 
     const changeInputName = e => {
@@ -32,14 +34,17 @@ function Home() {
     }
 
     const handleCancel = () => {
-        setModalIsOpen(false);
+        setModalOpen(false);
     }
 
-    const handleEnter = e => {
+    const handleKeyPress = e => {
+        console.log('key press', e.key);
         if (e.key === 'Enter') {
+            console.log('enter');
             handleSave();
         }
         if (e.key === 'Escape') {
+            console.log('escape');
             handleCancel();
         }
     }
@@ -73,15 +78,23 @@ function Home() {
                 </div>
             </div>
             <h3>Hello {player.name}</h3>
-            <button className="btn" onClick={handleOpenModule}>
-                Change name
-            </button>
+            <button className="btn" onClick={handleOpenModule}>Change name</button>
 
-            <div>
-                <Modal
+            <div className={modalOpen ? 'show-modal' : 'hide-modal'}>
+                <Modal1
+                    modalOpen={modalOpen}
+                    playerName={inputName}
+                    inputRef={inputRef}
+                    changeInputName={changeInputName}
+                    handleSave={handleSave}
+                    handleCancel={handleCancel}
+                    handleKeyPress={handleKeyPress}
+                />
+
+                {/* <Modal
                     className="modal"
-                    isOpen={modalIsOpen}
-                    onRequestClose={() => setModalIsOpen(false)}
+                    isOpen={modalOpen}
+                    onRequestClose={() => setModalOpen(false)}
                     onAfterOpen={() => inputRef.current.focus()}
                 >
                     <label>Enter Name: </label>
@@ -96,7 +109,7 @@ function Home() {
                         <button className="btn" onClick={handleSave}>Save name</button>
                         <button className="btn" onClick={handleCancel}>Cancel</button>
                     </div>
-                </Modal>
+                </Modal> */}
             </div>
 
         </div >
