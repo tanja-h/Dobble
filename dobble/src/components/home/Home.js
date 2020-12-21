@@ -46,39 +46,36 @@ function Home() {
 
     return (
         <div className="home">
-            Home
-            <hr />
-
-            <div className="elements">
-                <img src={Logo} alt="img missing" />
-                <Link to="/rules">
-                    <h2>Rules</h2>
-                </Link>
-                <div className="gameOptions">
+            <img src={Logo} alt="img missing" />
+            <Link to="/rules">
+                <h2>Rules</h2>
+            </Link>
+            <div className="gameOptions">
+                <div className="startNewGame">
                     <Link to='/game'>
                         <h2>Start New Game</h2>
                     </Link>
-                    <p>OR</p>
-                    <div className="join">
-                        <input
-                            type="text"
-                            className="input"
-                            placeholder="Enter Game Code"
-                            onChange={e => setGameCodeInput(e.target.value)}
-                        />
-                        <Link to={{
-                            pathname: '/game',
-                            gameCodeInput: gameCodeInput
-                        }}>
-                            <h2>Join Game</h2>
-                        </Link>
-                    </div>
                 </div>
-                <h3>Hello {player.name}</h3>
-                <button className="btn" onClick={handleOpenModule}>
-                    Change name
-                </button>
+                <p>OR</p>
+                <div className="join">
+                    <input
+                        type="text"
+                        className="input"
+                        placeholder="Enter Game Code"
+                        onChange={e => setGameCodeInput(e.target.value)}
+                    />
+                    <Link to={{
+                        pathname: '/game',
+                        gameCodeInput: gameCodeInput
+                    }}>
+                        <h2>Join Game</h2>
+                    </Link>
+                </div>
             </div>
+            <h3>Hello {player.name}</h3>
+            <button className="btn" onClick={handleOpenModule}>
+                Change name
+            </button>
 
             <div>
                 <Modal
@@ -105,5 +102,6 @@ function Home() {
         </div >
     );
 }
+
 
 export default Home;

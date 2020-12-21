@@ -10,16 +10,20 @@
 } */
 
 $border: 1px solid #0f0b08ff;
+$phone: 480px;
 
 .input {
     border: $border;
     width: 200px;
     height: 20px;
+    // text-align: center;
 }
 
 .btn {
     border: $border;
-    background-color: #9C64A6;
+    // background-color: #9C64A6;
+    background-color: #623671ff;
+    color: #bf7acb;
     height: 30px;
     width: 100px;
 }
@@ -36,74 +40,107 @@ h2:visited {
     text-align: center;
 }
 
-.elements {
-    display: grid;
-    place-items: center;
+.home {
+    // border: $border;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+    max-height: 800px;
+    padding: 10px;
+
+    @media screen and (max-width: $phone) {
+        width: 100%;
+        // align-items: stretch;
+        justify-content: space-evenly;
+    }
 
     .gameOptions {
         // border: $border;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        height: 20vh;
-        // min-width: 600px;
+        min-width: 400px;
+        width: 100%;
+        max-width: 600px;
+        min-height: 130px;
+
+        @media screen and (max-width: $phone) {
+            flex-direction: column;
+            justify-content: space-evenly;
+            min-width: 180px;
+            min-height: 250px;
+            height: 30%;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        // .startNewGame {
+        //     border: $border;
+        // }
 
         .join {
+            // border: $border;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
-            height: 20vh;
-            width: 200px;
-            
+            min-height: 100px;
+
             .input {
                 margin: 4px;
-                width: 130px;
-            }
-            
-            h2 {
-                margin: 4px;
-                margin: 0 auto;
+                width: 170px;
             }
         }
     }
 
     img {
         width: 150px;
-        // width: 100px;
     }
 
     h2 {
         cursor: pointer;
     }
-}
 
-.modal {
-    height: 20vh;
-    width: 50vh;
-    // background: rgb(238, 221, 68, 0.85);
-    background: rgb(238, 221, 68);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border: $border;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: relative;
-
-    .btn-group {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .btn {
-            margin: 5px;
-        }
+    .btn {
+        margin-bottom: 10px;
+        width: 120px;
     }
 
-}
+    .modal {
+        border: $border;
+        height: 20%;
+        width: 50%;
+        // background: rgb(238, 221, 68, 0.85);
+        background: rgb(238, 221, 68);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn {
+                margin: 5px;
+            }
+        }
+
+    }
+}
