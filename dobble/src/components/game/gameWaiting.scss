@@ -1,0 +1,28 @@
+.gameWaiting {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    p {
+        font-size: 1.2em;
+    }
+
+    .loading-spinner {
+        width: 5em;
+        height: 5em;
+        display: inline-block;
+        border: 3px solid rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        border-top-color: black;
+        margin-bottom: 5em;
+        animation: 1s spin infinite ease-in-out;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}

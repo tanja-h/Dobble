@@ -5,6 +5,11 @@ $red-border: 2px solid red;
 // background-color: #d58de1;
 
 .rules {
+
+    hr {
+        border: 0.1px solid #00000073;
+    }
+
     box-sizing: border-box;
     min-height: 100vh;
     min-width: 200px;

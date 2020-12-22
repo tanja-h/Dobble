@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 
 import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
-import Modal1 from '../modal/Modal';
+import Modal1 from '../modal/Modal1';
 
 Modal.setAppElement('#root');
 // Modal1.setAppElement('#root');

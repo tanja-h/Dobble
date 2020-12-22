@@ -4,9 +4,10 @@ function GameWaiting({ player, gameCode }) {
 
     return (
         <div className="gameWaiting">
-            <p>Welcome {player.name}</p>
-            <p>Your game code is: {gameCode}</p>
-            {/* <p>Waiting for players...</p> */}
+            <p>Welcome <b>{player.name}</b></p>
+            <p>Your game code is: <b>{gameCode}</b></p>
+            <p>Waiting for the other player . . .</p>
+            <div className="loading-spinner"></div>
         </div>
     );
 }

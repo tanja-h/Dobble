@@ -4,6 +4,8 @@ import { PlayerContext } from '../../context/PlayerContext';
 import io from 'socket.io-client';
 import GameWaiting from './GameWaiting';
 import GameInProgress from './GameInProgress';
+import './game.scss';
+import './gameWaiting.scss';
 
 let socket;
 
@@ -92,9 +94,7 @@ function Game({ location }) {
 
 
     return (
-        <div className="Game">
-            Game
-            <hr />
+        <div className="game">
             <ul>
                 <li>
                     <Link to="/">Home</Link>
