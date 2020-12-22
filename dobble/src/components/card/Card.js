@@ -4,6 +4,12 @@ import images from './ElementImages';
 
 function Card({ card, handleGuess }) {
 
+    const handleImageClick = (element) => {
+        if (handleGuess != null) {
+            handleGuess(element);
+        }
+    }
+
     return (
         <div className="card">
             {card.elements.map(element =>
@@ -11,7 +17,7 @@ function Card({ card, handleGuess }) {
                     <img
                         src={images[`${element}.png`]}
                         alt={element}
-                        onClick={() => handleGuess(element)}
+                        onClick={() => handleImageClick(element)}
                     />
                 </div>
             )}

@@ -78,7 +78,7 @@ function Home() {
                 </div>
             </div>
             <h3>Hello {player.name}</h3>
-            <button className="btn" onClick={handleOpenModule}>Change name</button>
+            <button className="btn" onClick={handleOpenModule}>Change your name</button>
 
             <div className={modalOpen ? 'show-modal' : 'hide-modal'}>
                 <Modal1

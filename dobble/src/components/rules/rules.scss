@@ -1,24 +1,93 @@
-/* .rules {
-    background-color: #EEDD44;
-} */
+$black-border: 1px solid #0f0b08ff;
+$blue-border: 2px solid blue;
+$red-border: 2px solid red;
+// background-color: #ffec3f;
+// background-color: #d58de1;
 
-/* .list {
-    display: block;
-} */
+.rules {
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-width: 200px;
+    padding: 10px;
+    padding-bottom: 20px;
 
-.list {
-    margin-right: 20px;
-    text-align: justify;
+    ul {
+        margin-top: 0;
+    }
 
-    li {
+    .about {
         margin-right: 20px;
+        text-align: justify;
 
-        p:nth-child(1) {
-            text-decoration: underline;
-            margin-bottom: 0;
+        li {
+            margin-right: 20px;
+
+            p:nth-child(1) {
+                text-decoration: underline;
+                margin-bottom: 0;
+            }
+
+            p:nth-child(2) {
+                margin-top: 5px;
+            }
         }
-        p:nth-child(2) {
-            margin-top: 5px;
+    }
+
+    .game-example {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        p {
+            font-size: 1.5em;
+        }
+
+        .card {
+            margin: 5px;
+        }
+
+        #first-card {
+            .card-element:nth-child(3) {
+                border: $red-border;
+            }
+        }
+
+        #second-card {
+            .card-element {
+                &:nth-child(5) {
+                    border: $red-border;
+                }
+
+                &:nth-child(7) {
+                    border: $blue-border;
+                }
+
+                img {
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+                }
+            }
+        }
+
+        #third-card {
+            .card-element:nth-child(4) {
+                border: $blue-border;
+            }
+        }
+
+        .player-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+
+            h5 {
+                margin: 0;
+            }
         }
     }
 }
