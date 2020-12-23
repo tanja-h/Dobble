@@ -15,7 +15,7 @@ function GameInProgress({ socket, player, gameState }) {
 
     const handleGuess = (element) => {
         console.log('guess', element);
-        socket.emit('guessElement', element);
+        // socket.emit('guessElement', element);
     }
 
     const handleDisableGuessing = (element) => {
@@ -23,22 +23,28 @@ function GameInProgress({ socket, player, gameState }) {
     }
 
     return (
-        <div className="container">
+        <div className="gameInProgress">
             <div className="opponent">
-                <div className="name">Opponent - {gameState.players[opponentPlayerIndex].name}</div>
+                <div className="mobile-view-group">
+                    <div className="name">Opponent - {gameState.players[opponentPlayerIndex].name}</div>
+                    <div className="score mobile-view">score: {gameState.players[opponentPlayerIndex].score}</div>
+                </div>
                 <Card card={gameState.players[opponentPlayerIndex].card} handleGuess={handleDisableGuessing} />
-                <div className="score">score: {gameState.players[opponentPlayerIndex].score}</div>
+                <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards">
                 <Card
                     card={gameState.deckOfCards[0]}
                     handleGuess={gameState.gameStatus === 'finished' ? handleDisableGuessing : handleGuess} />
-                {lastCard ? null : <div className="deck"></div>}
+                {lastCard ? null : <div className="deck-shadow"></div>}
             </div>
             <div className="main-player">
-                <div className="name">Main player - {gameState.players[mainPlayerIndex].name}</div>
+                <div className="name desktop-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
                 <Card card={gameState.players[mainPlayerIndex].card} handleGuess={handleDisableGuessing} />
-                <div className="score">score: {gameState.players[mainPlayerIndex].score}</div>
+                <div className="mobile-view-group">
+                    <div className="name mobile-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
+                    <div className="score">score: {gameState.players[mainPlayerIndex].score}</div>
+                </div>
             </div>
         </div>
     );
@@ -60,4 +66,4 @@ function GameInProgress({ socket, player, gameState }) {
 //     }
 // ]
 
-export default GameInProgress
+export default GameInProgress;

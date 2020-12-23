@@ -10,7 +10,7 @@ import { PlayerContext } from './context/PlayerContext';
 function App() {
   const [player, setPlayer] = useState({
     name: 'Player',
-    number: 0
+    number: 1
   });
 
   const ctxPlayer = [player, setPlayer];

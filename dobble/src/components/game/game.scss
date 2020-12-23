@@ -1,8 +1,9 @@
 .game{
-    max-height: 100vh;
+    height: 100vh;
     min-width: 200px;
+    width: 100%;
     padding: 10px;
-    padding-bottom: 20px;
+    box-sizing: border-box;
 
     ul {
         margin-top: 0;

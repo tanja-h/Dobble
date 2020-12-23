@@ -1,6 +1,6 @@
 import React from 'react';
 import images from './ElementImages';
-
+import './card.scss'
 
 function Card({ card, handleGuess }) {
 
