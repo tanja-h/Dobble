@@ -34,21 +34,30 @@ function findMatchingElement(centralCard, playerCard) {
     return match;
 }
 
-function updateGameState(gameState, playerIndex) {
-    gameState.players[playerIndex].score += 1;
-
+function updateGameState(gameState, playerNumber) {
     // gameState.gameStatus = 'finished';
-    // gameState.winner = playerIndex + 1;
+    // gameState.winner = playerNumber;
+    gameState.players[playerNumber - 1].card = gameState.deckOfCards.shift();
+    gameState.players[playerNumber - 1].score += 1;
 
-    if (gameState.deckOfCards.length == 1) {
+    if (gameState.deckOfCards.length == 0) {
         gameState.gameStatus = 'finished';
         gameState.winner = gameState.players[0].score > gameState.players[1].score ? 1 : 2;
     } else {
-        gameState.players[playerIndex].card = gameState.deckOfCards.shift();
         gameState.gameStatus = 'active';
     }
 
     return gameState;
+}
+
+const EXAMPLE_STATE = {
+    "players": [
+        { "name": "tanja", "card": { "id": 18, "elements": [37, 36, 3, 20, 28, 53, 45, 12] }, "score": 0 },
+        { "name": "jasmina", "card": { "id": 24, "elements": [40, 51, 49, 29, 4, 11, 31, 20] }, "score": 0 }
+    ],
+    "deckOfCards": [{ "id": 40, "elements": [13, 47, 28, 6, 51, 43, 17, 32] }],
+    "gameStatus": "started",
+    "winner": null
 }
 
 module.exports = { createGameState, findMatchingElement, updateGameState }

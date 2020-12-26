@@ -2,7 +2,7 @@ import React from 'react';
 import images from './ElementImages';
 import './card.scss'
 
-function Card({ card, handleGuess }) {
+function Card({ card, handleGuess, className }) {
 
     const handleImageClick = (element) => {
         if (handleGuess != null) {
@@ -11,7 +11,7 @@ function Card({ card, handleGuess }) {
     }
 
     return (
-        <div className="card">
+        <div className={`card ${className ? className : ''}`}>
             {card.elements.map(element =>
                 <div className="card-element" key={element}>
                     <img

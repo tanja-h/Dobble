@@ -71,7 +71,7 @@ const EXAMPLE_CARDS = [
     },
     {
         id: 2,
-        elements: [17, 18, 20, 15, 21, 22, 23, 1]
+        elements: [17, 18, 20, 15, 21, 22, 23, 24]
     }
 ]
 

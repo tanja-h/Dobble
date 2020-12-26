@@ -5,65 +5,87 @@ import './gameInProgress.scss';
 function GameInProgress({ socket, player, gameState }) {
     const mainPlayerIndex = player.number - 1;
     const opponentPlayerIndex = 2 - player.number;
-    const [lastCard, setLastCard] = useState(false);
+    const [lastMove, setLastMove] = useState(false);
+    const [animation, setAnimation] = useState('');
+    const [currentState, setCurrentState] = useState(gameState);
 
     useEffect(() => {
-        if (gameState.deckOfCards.length === 1) {
-            setLastCard(true);
+        console.log('useeffect za gamestate - ', animation);
+        if (gameState.gameStatus === 'active' || gameState.gameStatus === 'finished') {
+            console.log('active ili finished');
+            const firstPlayerScores = [currentState.players[0].score, gameState.players[0].score];
+            if (firstPlayerScores[0] !== firstPlayerScores[1]) {
+                console.log('animacija 1-1');
+                handleCardAnimation(1);
+            } else {
+                console.log('animacija 1-2');
+                handleCardAnimation(2);
+            }
         }
+
+        if (gameState.deckOfCards.length <= 1) {
+            setLastMove(true);
+        }
+
+        setCurrentState(gameState);
+        console.log('postavljen novi state');
     }, [gameState]);
+
+    useEffect(() => {
+        console.log('useeffect animacija 3', animation);
+        if (animation !== '') {
+            const timer = setTimeout(() => {
+                setAnimation('');
+            }, 1000);
+            clearTimeout(timer);
+        }
+    }, [animation])
+
+    const handleCardAnimation = (winner) => {
+        console.log('handle animacija 2', winner);
+        if (winner === player.number) {
+            setAnimation('animation-down');
+        } else {
+            setAnimation('animation-up');
+        }
+    }
 
     const handleGuess = (element) => {
         console.log('guess', element);
-        // socket.emit('guessElement', element);
-    }
-
-    const handleDisableGuessing = (element) => {
-        console.log('wrong deck', element);
+        socket.emit('guessElement', element);
     }
 
     return (
         <div className="gameInProgress">
-            <div className="opponent">
+            <div className="opponent" id="opponent">
                 <div className="mobile-view-group">
-                    <div className="name">Opponent - {gameState.players[opponentPlayerIndex].name}</div>
-                    <div className="score mobile-view">score: {gameState.players[opponentPlayerIndex].score}</div>
+                    <div className="name">Opponent - {currentState.players[opponentPlayerIndex].name}</div>
+                    <div className="score mobile-view">score: {currentState.players[opponentPlayerIndex].score}</div>
                 </div>
-                <Card card={gameState.players[opponentPlayerIndex].card} handleGuess={handleDisableGuessing} />
-                <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
+                <Card card={currentState.players[opponentPlayerIndex].card} handleGuess={null} />
+                <div className="score desktop-view">score: {currentState.players[opponentPlayerIndex].score}</div>
             </div>
-            <div className="deck-of-cards">
-                <Card
-                    card={gameState.deckOfCards[0]}
-                    handleGuess={gameState.gameStatus === 'finished' ? handleDisableGuessing : handleGuess} />
-                {lastCard ? null : <div className="deck-shadow"></div>}
+            <div className="deck-of-cards" id="deck-of-cards">
+                {lastMove ? null :
+                    <>
+                        <div className="deck-shadow"></div>
+                        <Card card={currentState.deckOfCards[1]} className="duplicate" />
+                    </>
+                }
+                {currentState.deckOfCards[0] === null ? null :
+                    <Card card={currentState.deckOfCards[0]} className={animation} handleGuess={handleGuess} />
+                }
             </div>
-            <div className="main-player">
-                <div className="name desktop-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
-                <Card card={gameState.players[mainPlayerIndex].card} handleGuess={handleDisableGuessing} />
+            <div className="main-player" id="main-player">
+                <div className="name desktop-view">Your name - {currentState.players[mainPlayerIndex].name}</div>
+                <Card card={currentState.players[mainPlayerIndex].card} handleGuess={null} />
                 <div className="mobile-view-group">
-                    <div className="name mobile-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
-                    <div className="score">score: {gameState.players[mainPlayerIndex].score}</div>
+                    <div className="name mobile-view">Your name - {currentState.players[mainPlayerIndex].name}</div>
+                    <div className="score">score: {currentState.players[mainPlayerIndex].score}</div>
                 </div>
             </div>
         </div>
     );
 }
-
-// const [cards, setCards] = useState(SAMPLE_CARDS);
-// const SAMPLE_CARDS = [
-//     {
-//         id: 0,
-//         elements: [2, 3, 4, 5, 1, 6, 7, 8]
-//     },
-//     {
-//         id: 1,
-//         elements: [9, 10, 11, 12, 13, 14, 15, 1]
-//     },
-//     {
-//         id: 2,
-//         elements: [16, 17, 1, 18, 19, 20, 21, 22]
-//     }
-// ]
 
 export default GameInProgress;

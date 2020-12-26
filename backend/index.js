@@ -92,17 +92,9 @@ io.on('connection', (socket) => {
 
         if (element == findMatchingElement(centralCard, playerCard)) {
             socket.emit('info', 'match found');
-            game = updateGameState(gameState, player.number - 1);
+            game = updateGameState(gameState, player.number);
             console.log('gameState', game.players, game.gameStatus, game.winner);
             io.to(player.room).emit('gameState', game);
-
-            // if (game.winner) {
-            //     console.log('winner', game.winner);
-            //     io.to(player.room).emit('gameState', game);
-            //     // io.to(player.room).emit('gameOver', game.winner);
-            // } else {
-            //     io.to(player.room).emit('gameState', game);
-            // }
         } else {
             socket.emit('info', 'try again');
         }

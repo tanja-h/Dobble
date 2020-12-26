@@ -9,16 +9,16 @@
 //     width: 26vh;
 // }
 
-@mixin scale {
-    //card-background and elements' size scaled by 1.15
-    width: 195.5px;
-    height: 195.5px;
+// @mixin scale {
+//     //card-background and elements' size scaled by 1.15
+//     width: 195.5px;
+//     height: 195.5px;
 
-    .card-element {
-        width: 46px;
-        height: 46px;
-    }
-}
+//     .card-element {
+//         width: 46px;
+//         height: 46px;
+//     }
+// }
 
 $black-border: 1px solid black;
 $phone: 500px;
@@ -43,14 +43,13 @@ $phone: 500px;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-
-        // .card {}
     }
 
     .opponent,
     .main-player {
         height: 32%;
         background-color: #9c64a6;
+        z-index: 0;
 
         @media screen and (max-width: $phone) {
             flex-direction: column;
@@ -131,7 +130,7 @@ $phone: 500px;
     .deck-of-cards {
         height: 36%;
         background-color: yellow;
-        z-index: 0;
+        z-index: 1;
 
         .card,
         .card-element {
@@ -140,6 +139,7 @@ $phone: 500px;
 
         .card {
             position: absolute;
+            box-shadow: 0 0 5px black;
             z-index: 10;
 
             .card-element img {
@@ -148,19 +148,58 @@ $phone: 500px;
                 &:hover {
                     transform: scale(1.05);
                 }
-            }
+            } 
         }
+
+        .card.duplicate {
+            background-color: darksalmon;
+            box-shadow: 0 0 10px black;
+        }
+
+        .card.animation-up {
+            background-color: darkseagreen;
+            position: absolute;
+            --direction: -30.5vh;
+            // animation: cardMove 1s ease-in-out;
+        }
+
+        .card.animation-down {
+            background-color: blue;
+            position: absolute;
+            --direction: 30.5vh;
+            // animation: cardMove 1s ease-in-out;
+            // cardScale 1s ease-in-out
+        }
+
+        @keyframes cardMove {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(--direction);
+            }
+        }   
+
+        @keyframes cardScale {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }   
 
         .deck-shadow {
             // @include card-background();
-            @include scale();
+            // @include scale();
             position: absolute;
             background-color: lightgray;
             border-radius: 50%;
-            // border: $black-border;
             height: 26vh;
             width: 26vh;
-            transform: scale(1.15) translate(-25px);
+            transform: scale(1.15) translate(-38px);
             z-index: -1;
         }
 

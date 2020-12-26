@@ -1,14 +1,13 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.png';
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
 
 import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
 import Modal1 from '../modal/Modal1';
 
-Modal.setAppElement('#root');
-// Modal1.setAppElement('#root');
+// Modal.setAppElement('#root');
 
 function Home() {
     const [player, setPlayer] = useContext(PlayerContext);
@@ -38,7 +37,6 @@ function Home() {
     }
 
     const handleKeyPress = e => {
-        console.log('key press', e.key);
         if (e.key === 'Enter') {
             console.log('enter');
             handleSave();
