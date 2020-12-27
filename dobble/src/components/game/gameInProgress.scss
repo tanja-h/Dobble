@@ -22,6 +22,9 @@
 
 $black-border: 1px solid black;
 $phone: 500px;
+// $directionDesktop: 30.5vh;
+$directionDesktop: 118%;
+$directionMobile: 115%;
 
 .gameInProgress {
     height: 90vh;
@@ -148,48 +151,58 @@ $phone: 500px;
                 &:hover {
                     transform: scale(1.05);
                 }
-            } 
+            }
         }
 
         .card.duplicate {
-            background-color: darksalmon;
+            position: absolute;
+            left: 0;
+            background-color: darkseagreen;
             box-shadow: 0 0 10px black;
+
+            .card-element img {
+                cursor: default;
+
+                &:hover {
+                    transform: scale(1);
+                }
+            }
         }
 
         .card.animation-up {
-            background-color: darkseagreen;
-            position: absolute;
+            background-color: darksalmon;
+            position: relative;
             --direction: -30.5vh;
-            // animation: cardMove 1s ease-in-out;
+            animation: cardMove 1s ease-in-out;
+
+            @media screen and (max-width: $phone) {
+                --direction: -29.8vh;
+            }
+
         }
 
         .card.animation-down {
-            background-color: blue;
-            position: absolute;
+            background-color: darkturquoise;
+            position: relative;
             --direction: 30.5vh;
-            // animation: cardMove 1s ease-in-out;
-            // cardScale 1s ease-in-out
+            animation: cardMove 1s ease-in-out;
+
+            @media screen and (max-width: $phone) {
+                --direction: 29.8vh;
+            }
         }
 
         @keyframes cardMove {
             0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(--direction);
-            }
-        }   
-
-        @keyframes cardScale {
-            0% {
-                transform: scale(1);
-            }
-
-            100% {
+                top: 0;
                 transform: scale(1.15);
             }
-        }   
+
+            100% {
+                top: var(--direction);
+                transform: scale(1);
+            }
+        }
 
         .deck-shadow {
             // @include card-background();
