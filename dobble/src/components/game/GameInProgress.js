@@ -33,12 +33,12 @@ function GameInProgress({ socket, player, gameState }) {
 
     useEffect(() => {
         console.log('useeffect animacija 3', animation);
-        if (animation !== '') {
-            const timer = setTimeout(() => {
+        const timer = setTimeout(() => {
+            if (animation !== '') {
                 setAnimation('');
-            }, 1000);
-            clearTimeout(timer);
-        }
+            }
+        }, 1000);
+        return () => { clearTimeout(timer); }
     }, [animation])
 
     const handleCardAnimation = (winner) => {
@@ -72,7 +72,7 @@ function GameInProgress({ socket, player, gameState }) {
                         <Card card={currentState.deckOfCards[1]} className="duplicate" />
                     </>
                 }
-                {currentState.deckOfCards[0] === null ? null :
+                {currentState.deckOfCards.length === 0 ? null :
                     <Card card={currentState.deckOfCards[0]} className={animation} handleGuess={handleGuess} />
                 }
             </div>
