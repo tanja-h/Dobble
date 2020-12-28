@@ -17,19 +17,19 @@ function GameInProgress({ socket, player, gameState }) {
         console.log('useeffect za gamestate - ', animation);
         if (gameState.gameStatus === 'active' || gameState.gameStatus === 'finished') {
             console.log(gameState.status);
-            let playerWhoScoreUp;
+            let playerScoredUp;
             const firstPlayerScores = [currentState.players[0].score, gameState.players[0].score];
 
             if (firstPlayerScores[0] !== firstPlayerScores[1]) {
                 console.log('animacija 1-1');
-                playerWhoScoreUp = 1;
+                playerScoredUp = 1;
             } else {
                 console.log('animacija 1-2');
-                playerWhoScoreUp = 2
+                playerScoredUp = 2
             }
-            setOldCard(currentState.players[playerWhoScoreUp - 1].card);
-            setAnimationCard(gameState.players[playerWhoScoreUp - 1].card);
-            handleCardAnimation(playerWhoScoreUp);
+            setOldCard(currentState.players[playerScoredUp - 1].card);
+            setAnimationCard(gameState.players[playerScoredUp - 1].card);
+            handleCardAnimation(playerScoredUp);
         }
 
         if (gameState.deckOfCards.length <= 1) {
