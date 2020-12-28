@@ -178,17 +178,13 @@ $phone: 500px;
         }
 
         .deck-shadow {
-            // @include card-background();
-            // @include scale();
             position: absolute;
-            background-color: lightgray;
+            background-color: #ababab;
             border-radius: 50%;
-            height: 26vh;
-            width: 26vh;
-            transform: scale(1.15) translate(-38px);
+            height: 29.9vh;
+            width: 29.9vh;
+            transform: translate(-43px);
             z-index: -1;
         }
-
     }
-
 }

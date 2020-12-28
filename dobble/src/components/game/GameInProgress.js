@@ -11,7 +11,7 @@ function GameInProgress({ socket, player, gameState }) {
     const [animation, setAnimation] = useState('');
     const [oldCard, setOldCard] = useState(gameState.deckOfCards[0]);
     const [animationCard, setAnimationCard] = useState(gameState.deckOfCards[0]);
-
+    const [shadow, setShadow] = useState(-43);
 
     useEffect(() => {
         console.log('useeffect za gamestate - ', animation);
@@ -30,6 +30,7 @@ function GameInProgress({ socket, player, gameState }) {
             setOldCard(currentState.players[playerScoredUp - 1].card);
             setAnimationCard(gameState.players[playerScoredUp - 1].card);
             handleCardAnimation(playerScoredUp);
+            moveShadow();
         }
 
         if (gameState.deckOfCards.length <= 1) {
@@ -53,6 +54,13 @@ function GameInProgress({ socket, player, gameState }) {
             clearTimeout(timer);
         }
     }, [animation]);
+
+    const moveShadow = () => {
+        if (document.getElementById('shadow')){  
+            document.getElementById('shadow').style.transform = `translate(calc(${shadow}px + 0.7px))`;
+            setShadow(prevShadow => prevShadow + 0.7);
+        }
+    }
 
     const handleCardAnimation = (winner) => {
         console.log('handle animacija 2', winner);
@@ -79,7 +87,7 @@ function GameInProgress({ socket, player, gameState }) {
                 <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards" id="deck-of-cards">
-                {lastMove ? null : <div className="deck-shadow"></div>}
+                {lastMove ? null : <div id="shadow" className="deck-shadow"></div>}
                 {gameState.deckOfCards.length === 0 ? null :
                     <Card card={gameState.deckOfCards[0]} handleGuess={handleGuess} />
                 }
