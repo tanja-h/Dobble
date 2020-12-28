@@ -61,13 +61,13 @@ function Game({ location }) {
         if (gameState && gameState.gameStatus === 'started') {
             setGameStarted(true);
         }
-        else if (gameState && gameState.gameStatus === 'finished') {
-            if (gameState.winner === player.number) {
-                alert('YOU WON!');
-            } else {
-                alert('YOU LOST!');
-            }
-        }
+        // else if (gameState && gameState.gameStatus === 'finished') {
+        //     if (gameState.winner === player.number) {
+        //         setWinner(true);
+        //     } else {
+        //         setWinner(false);
+        //     }
+        // }
     }, [gameState]);
 
     const handleInfo = (info) => {
@@ -107,7 +107,15 @@ function Game({ location }) {
                 </li>
             </ul>
             <hr />
-
+            {gameState && gameState.gameStatus === 'finished' ?
+                <div className="overlay-text">
+                    {gameState.winner === player.number ? "YOU WON" : "YOU LOST"}
+                    {console.log('winner',gameState.winner)}
+                    <Link to="/"><span className="overlay-text-small">Go back to Home Page</span></Link>
+                </div>
+                :
+                null
+            }
             <div>
                 {gameStarted ?
                     <GameInProgress socket={socket} player={player} gameState={gameState} />

@@ -1,4 +1,6 @@
-.game{
+$phone: 480px;
+
+.game {
     height: 100vh;
     min-width: 200px;
     width: 100%;
@@ -12,4 +14,38 @@
     hr {
         border: 0.1px solid #00000073;
     }
+
+    
+    .overlay-text {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 100;
+        color: #623671ff;
+        animation: overlay-grow 500ms forwards;
+    }
+    
+    .overlay-text-small {
+        font-size: .3em;
+    }
+
+    @keyframes overlay-grow {
+        from {
+            background-color: rgba($color: #eedd44ff, $alpha: 0);
+            font-size: 0;
+        }
+
+        to {
+            background-color: rgba($color: #eedd44ff, $alpha: .6);
+            font-size: 4.5em;
+        }
+    }
+
 }
