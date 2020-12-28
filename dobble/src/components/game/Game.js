@@ -62,16 +62,13 @@ function Game({ location }) {
             setGameStarted(true);
         }
         else if (gameState && gameState.gameStatus === 'finished') {
-            console.log('status finished', gameState.gameStatus);
-            console.log('winner', gameState.winner);
-            console.log('player number', player.number);
             if (gameState.winner === player.number) {
                 alert('YOU WON!');
             } else {
                 alert('YOU LOST!');
             }
         }
-    }, [gameState, player]);
+    }, [gameState]);
 
     const handleInfo = (info) => {
         if (info.includes('has left the game')) {
@@ -93,6 +90,7 @@ function Game({ location }) {
 
     const handleGameState = (game) => {
         setGameState(game);
+        console.log('postavljen state');
     }
 
     const handleDisconnect = () => {

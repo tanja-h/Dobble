@@ -1,30 +1,5 @@
-// @mixin card-background {
-//     position: relative;
-//     // height: 180px;
-//     // width: 180px;
-//     background-color: white;
-//     border-radius: 50%;
-//     margin: 0 auto;
-//     height: 26vh;
-//     width: 26vh;
-// }
-
-// @mixin scale {
-//     //card-background and elements' size scaled by 1.15
-//     width: 195.5px;
-//     height: 195.5px;
-
-//     .card-element {
-//         width: 46px;
-//         height: 46px;
-//     }
-// }
-
 $black-border: 1px solid black;
 $phone: 500px;
-// $directionDesktop: 30.5vh;
-$directionDesktop: 118%;
-$directionMobile: 115%;
 
 .gameInProgress {
     height: 90vh;
@@ -98,7 +73,6 @@ $directionMobile: 115%;
 
         .mobile-view-group {
             @media screen and (max-width: $phone) {
-                // border: 1px solid red;
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
@@ -154,10 +128,9 @@ $directionMobile: 115%;
             }
         }
 
-        .card.duplicate {
+        .card.animation {
             position: absolute;
-            left: 0;
-            background-color: darkseagreen;
+            display: none;
             box-shadow: 0 0 10px black;
 
             .card-element img {
@@ -169,23 +142,23 @@ $directionMobile: 115%;
             }
         }
 
-        .card.animation-up {
-            background-color: darksalmon;
+        .animation.up {
+            display: block;
             position: relative;
             --direction: -30.5vh;
-            animation: cardMove 1s ease-in-out;
-
+            animation: cardMove 0.7s ease-in-out;
+            
             @media screen and (max-width: $phone) {
                 --direction: -29.8vh;
             }
-
+            
         }
-
-        .card.animation-down {
-            background-color: darkturquoise;
+        
+        .animation.down {
+            display: block;
             position: relative;
             --direction: 30.5vh;
-            animation: cardMove 1s ease-in-out;
+            animation: cardMove 0.7s ease-in-out;
 
             @media screen and (max-width: $phone) {
                 --direction: 29.8vh;
@@ -216,31 +189,6 @@ $directionMobile: 115%;
             z-index: -1;
         }
 
-        // .deck-shadow {
-        //     position: relative;
-        //     background-color: lightgray;
-        //     // border-radius: 50%;
-        //     margin: 0 auto;
-        //     height: 30vh;
-        //     width: 25%; //zavisno
-        //     z-index: 2;
-        //     transform: translate(-50%);
-
-        //     @media screen and (max-width: $phone) {
-        //         max-width: 25%;
-        //     }
-        // }
-
-        // .deck-shadow::before{
-        //     position: absolute;
-        //     content: '';
-        //     height: 30vh;
-        //     width: 30vh;
-        //     background-color: gray;
-        //     border-radius: 50%;
-        //     z-index: 1;
-        //     left: -25%; //zavisno
-        // }
     }
 
 }

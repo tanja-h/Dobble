@@ -5,22 +5,31 @@ import './gameInProgress.scss';
 function GameInProgress({ socket, player, gameState }) {
     const mainPlayerIndex = player.number - 1;
     const opponentPlayerIndex = 2 - player.number;
+
+    const [currentState, setCurrentState] = useState(gameState);
     const [lastMove, setLastMove] = useState(false);
     const [animation, setAnimation] = useState('');
-    const [currentState, setCurrentState] = useState(gameState);
+    const [oldCard, setOldCard] = useState(gameState.deckOfCards[0]);
+    const [animationCard, setAnimationCard] = useState(gameState.deckOfCards[0]);
+
 
     useEffect(() => {
         console.log('useeffect za gamestate - ', animation);
         if (gameState.gameStatus === 'active' || gameState.gameStatus === 'finished') {
-            console.log('active ili finished');
+            console.log(gameState.status);
+            let playerWhoScoreUp;
             const firstPlayerScores = [currentState.players[0].score, gameState.players[0].score];
+
             if (firstPlayerScores[0] !== firstPlayerScores[1]) {
                 console.log('animacija 1-1');
-                handleCardAnimation(1);
+                playerWhoScoreUp = 1;
             } else {
                 console.log('animacija 1-2');
-                handleCardAnimation(2);
+                playerWhoScoreUp = 2
             }
+            setOldCard(currentState.players[playerWhoScoreUp - 1].card);
+            setAnimationCard(gameState.players[playerWhoScoreUp - 1].card);
+            handleCardAnimation(playerWhoScoreUp);
         }
 
         if (gameState.deckOfCards.length <= 1) {
@@ -28,7 +37,7 @@ function GameInProgress({ socket, player, gameState }) {
         }
 
         setCurrentState(gameState);
-        console.log('postavljen novi state');
+        console.log('postavljen novi current state');
     }, [gameState]);
 
     useEffect(() => {
@@ -36,17 +45,21 @@ function GameInProgress({ socket, player, gameState }) {
         const timer = setTimeout(() => {
             if (animation !== '') {
                 setAnimation('');
+                console.log('animacija empty', animation);
             }
-        }, 1000);
-        return () => { clearTimeout(timer); }
-    }, [animation])
+        }, 700);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [animation]);
 
     const handleCardAnimation = (winner) => {
         console.log('handle animacija 2', winner);
         if (winner === player.number) {
-            setAnimation('animation-down');
+            setAnimation('down');
         } else {
-            setAnimation('animation-up');
+            setAnimation('up');
         }
     }
 
@@ -59,29 +72,25 @@ function GameInProgress({ socket, player, gameState }) {
         <div className="gameInProgress">
             <div className="opponent" id="opponent">
                 <div className="mobile-view-group">
-                    <div className="name">Opponent - {currentState.players[opponentPlayerIndex].name}</div>
-                    <div className="score mobile-view">score: {currentState.players[opponentPlayerIndex].score}</div>
+                    <div className="name">Opponent - {gameState.players[opponentPlayerIndex].name}</div>
+                    <div className="score mobile-view">score: {gameState.players[opponentPlayerIndex].score}</div>
                 </div>
-                <Card card={currentState.players[opponentPlayerIndex].card} handleGuess={null} />
-                <div className="score desktop-view">score: {currentState.players[opponentPlayerIndex].score}</div>
+                {animation === 'up' ? <Card card={oldCard}/> : <Card card={gameState.players[opponentPlayerIndex].card}/>}
+                <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards" id="deck-of-cards">
-                {lastMove ? null :
-                    <>
-                        <div className="deck-shadow"></div>
-                        <Card card={currentState.deckOfCards[1]} className="duplicate" />
-                    </>
+                {lastMove ? null : <div className="deck-shadow"></div>}
+                {gameState.deckOfCards.length === 0 ? null :
+                    <Card card={gameState.deckOfCards[0]} handleGuess={handleGuess} />
                 }
-                {currentState.deckOfCards.length === 0 ? null :
-                    <Card card={currentState.deckOfCards[0]} className={animation} handleGuess={handleGuess} />
-                }
+                <Card card={animationCard} className={`animation ${animation}`} />
             </div>
             <div className="main-player" id="main-player">
-                <div className="name desktop-view">Your name - {currentState.players[mainPlayerIndex].name}</div>
-                <Card card={currentState.players[mainPlayerIndex].card} handleGuess={null} />
+                <div className="name desktop-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
+                {animation === 'down' ? <Card card={oldCard}/> : <Card card={gameState.players[mainPlayerIndex].card}/>}
                 <div className="mobile-view-group">
-                    <div className="name mobile-view">Your name - {currentState.players[mainPlayerIndex].name}</div>
-                    <div className="score">score: {currentState.players[mainPlayerIndex].score}</div>
+                    <div className="name mobile-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
+                    <div className="score">score: {gameState.players[mainPlayerIndex].score}</div>
                 </div>
             </div>
         </div>
