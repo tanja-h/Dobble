@@ -56,8 +56,7 @@ function GameInProgress({ socket, player, gameState }) {
     }, [animation]);
 
     const moveShadow = () => {
-        if (document.getElementById('shadow')){  
-            document.getElementById('shadow').style.transform = `translate(calc(${shadow}px + 0.7px))`;
+        if (!lastMove) {  
             setShadow(prevShadow => prevShadow + 0.7);
         }
     }
@@ -87,7 +86,7 @@ function GameInProgress({ socket, player, gameState }) {
                 <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards" id="deck-of-cards">
-                {lastMove ? null : <div id="shadow" className="deck-shadow"></div>}
+                {lastMove ? null : <div className="deck-shadow" style={{ transform: `translate(calc(${shadow}px + 0.7px))` }} ></div>}
                 {gameState.deckOfCards.length === 0 ? null :
                     <Card card={gameState.deckOfCards[0]} handleGuess={handleGuess} />
                 }
