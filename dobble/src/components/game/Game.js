@@ -109,7 +109,7 @@ function Game({ location }) {
             <hr />
             {gameState && gameState.gameStatus === 'finished' ?
                 <div className="overlay-text">
-                    {gameState.winner === player.number ? "YOU WON" : "YOU LOST"}
+                    <b>{gameState.winner === player.number ? "YOU WON" : "YOU LOST"}</b>
                     {console.log('winner',gameState.winner)}
                     <Link to="/"><span className="overlay-text-small">Go back to Home Page</span></Link>
                 </div>
