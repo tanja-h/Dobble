@@ -9,7 +9,7 @@ import { PlayerContext } from './context/PlayerContext';
 
 function App() {
   const [player, setPlayer] = useState({
-    name: 'Player',
+    name: '',
     number: 0
   });
 

@@ -24,7 +24,12 @@ function Game({ location }) {
     useEffect(() => {
         socket = io(ENDPOINT);
         console.log('game code input', location.gameCodeInput ? 1 : 2);
-        if (location.gameCodeInput === '') {
+        if (player.name === '') {
+            console.log('empty name');
+            alert('Please enter your name');
+            history.push('/');
+        }
+        else if (location.gameCodeInput === '') {
             console.log('empty code');
             alert('empty code');
             history.push('/');

@@ -50,9 +50,10 @@ function Home() {
     return (
         <div className="home">
             <img src={Logo} alt="img missing" />
-            <Link to="/rules">
-                <h2>Rules</h2>
-            </Link>
+
+            <h3>Hello {player.name}</h3>
+            <button className="btn" onClick={handleOpenModule}>Change your name</button>
+
             <div className="gameOptions">
                 <div className="startNewGame">
                     <Link to='/game'>
@@ -75,9 +76,11 @@ function Home() {
                     </Link>
                 </div>
             </div>
-            <h3>Hello {player.name}</h3>
-            <button className="btn" onClick={handleOpenModule}>Change your name</button>
-
+            
+            <Link to="/rules">
+                <h2>Rules</h2>
+            </Link>
+            
             <div className={modalOpen ? 'show-modal' : 'hide-modal'}>
                 <Modal1
                     modalOpen={modalOpen}

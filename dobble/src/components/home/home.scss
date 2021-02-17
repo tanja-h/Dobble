@@ -21,9 +21,10 @@ input {
 
 .btn {
     border: $border;
-    // background-color: #9C64A6;
-    background-color: #623671ff;
-    color: #bf7acb;
+    background-color: #9C64A6;
+    // background-color: #623671ff;
+    // color: #bf7acb;
+    color: black;
     height: 30px;
     width: 100px;
 }
@@ -35,7 +36,7 @@ h2:visited {
     border-radius: 45%;
     border: 3px solid #623671;
     background-color: #9C64A6;
-    padding: 10px;
+    padding: 15px;
     width: 150px;
     text-align: center;
 }
@@ -118,9 +119,13 @@ h2:visited {
     }
 
     .btn {
-        margin-bottom: 10px;
-        width: 150px;
+        // margin-bottom: 10px;
+        width: 180px;
         height: 40px;
+        border: 2px solid #623671;
+        border-radius: 40%;
+        font-size: 1em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
     .show-modal {
@@ -168,6 +173,8 @@ h2:visited {
             width: 100%;
 
             .btn {
+                border: $border;
+                border-radius: 0;
                 min-width: 80px;
                 width: 45%;
                 height: 35px;
