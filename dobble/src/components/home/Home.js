@@ -1,11 +1,9 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.png';
-// import Modal from 'react-modal';
-
 import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
-import Modal1 from '../modal/Modal1';
+import Modal from '../modal/Modal';
 
 // Modal.setAppElement('#root');
 
@@ -82,7 +80,7 @@ function Home() {
             </Link>
             
             <div className={modalOpen ? 'show-modal' : 'hide-modal'}>
-                <Modal1
+                <Modal
                     modalOpen={modalOpen}
                     playerName={inputName}
                     inputRef={inputRef}
@@ -91,26 +89,6 @@ function Home() {
                     handleCancel={handleCancel}
                     handleKeyPress={handleKeyPress}
                 />
-
-                {/* <Modal
-                    className="modal"
-                    isOpen={modalOpen}
-                    onRequestClose={() => setModalOpen(false)}
-                    onAfterOpen={() => inputRef.current.focus()}
-                >
-                    <label>Enter Name: </label>
-                    <input
-                        ref={inputRef}
-                        className="input"
-                        type="text"
-                        onChange={changeInputName}
-                        onKeyPress={handleEnter}
-                    ></input>
-                    <div className="btn-group">
-                        <button className="btn" onClick={handleSave}>Save name</button>
-                        <button className="btn" onClick={handleCancel}>Cancel</button>
-                    </div>
-                </Modal> */}
             </div>
 
         </div >
