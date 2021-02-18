@@ -5,8 +5,6 @@ import { PlayerContext } from '../../context/PlayerContext';
 import './home.scss';
 import Modal from '../modal/Modal';
 
-// Modal.setAppElement('#root');
-
 function Home() {
     const [player, setPlayer] = useContext(PlayerContext);
     const [gameCodeInput, setGameCodeInput] = useState('');

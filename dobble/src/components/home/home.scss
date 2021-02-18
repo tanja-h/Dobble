@@ -16,14 +16,11 @@ input {
     border: $border;
     width: 200px;
     height: 20px;
-    // text-align: center;
 }
 
 .btn {
     border: $border;
     background-color: #9C64A6;
-    // background-color: #623671ff;
-    // color: #bf7acb;
     color: black;
     height: 30px;
     width: 100px;
@@ -42,7 +39,6 @@ h2:visited {
 }
 
 .home {
-    // border: $border;
     box-sizing: border-box;
     overflow-x: hidden;
     position: relative;
@@ -56,12 +52,10 @@ h2:visited {
 
     @media screen and (max-width: $phone) {
         width: 100%;
-        // align-items: stretch;
         justify-content: space-evenly;
     }
 
     .gameOptions {
-        // border: $border;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -87,12 +81,7 @@ h2:visited {
             margin: 0;
         }
 
-        // .startNewGame {
-        //     border: $border;
-        // }
-
         .join {
-            // border: $border;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -119,7 +108,6 @@ h2:visited {
     }
 
     .btn {
-        // margin-bottom: 10px;
         width: 180px;
         height: 40px;
         border: 2px solid #623671;
@@ -135,7 +123,6 @@ h2:visited {
         width: 60%;
         max-width: 350px;
         background: #eedd44ff;
-        // background: rgb(238, 221, 68);
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -144,10 +131,8 @@ h2:visited {
         position: fixed;
         margin: 0 auto;
         z-index: 1;
-        // transform: translate(-50%, -50%);
 
         .input-group {
-            // border: $border;
             width: 100%;
             min-height: 60px;
             display: flex;
@@ -160,13 +145,11 @@ h2:visited {
             }
 
             input {
-                // max-width: ;
                 width: 70%;
             }
         }
 
         .btn-group {
-            // border: $border;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
