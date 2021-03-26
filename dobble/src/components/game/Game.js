@@ -10,7 +10,7 @@ import './gameWaiting.scss';
 let socket;
 
 function Game({ location }) {
-    const ENDPOINT = '192.168.0.35:5000';
+    const ENDPOINT = '192.168.0.37:5000';
     // const ENDPOINT = '192.168.1.55:5000';
     const history = useHistory();
 
