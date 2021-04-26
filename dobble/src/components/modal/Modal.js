@@ -9,7 +9,7 @@ function Modal({inputRef, changeInputName,
      }, [modalOpen])
 
     return (
-        <div>
+        <div className="modal">
             <div className="input-group">
                 <label>Enter Name: </label>
                 <input
@@ -21,7 +21,7 @@ function Modal({inputRef, changeInputName,
                 />
             </div>
             <div className="btn-group">
-                <button className="btn" onClick={handleSave}>Save name</button>
+                <button className="btn" onClick={handleSave}>Save</button>
                 <button className="btn" onClick={handleCancel}>Cancel</button>
             </div>
         </div>

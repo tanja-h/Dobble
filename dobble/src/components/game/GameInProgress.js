@@ -79,11 +79,11 @@ function GameInProgress({ socket, player, gameState }) {
         <div className="gameInProgress">
             <div className="opponent" id="opponent">
                 <div className="mobile-view-group">
-                    <div className="name">Opponent - {gameState.players[opponentPlayerIndex].name}</div>
-                    <div className="score mobile-view">score: {gameState.players[opponentPlayerIndex].score}</div>
+                    <div className="name">{gameState.players[opponentPlayerIndex].name}</div>
+                    <div className="score mobile-view">{gameState.players[opponentPlayerIndex].score}</div>
                 </div>
                 {animation === 'up' ? <Card card={oldCard}/> : <Card card={gameState.players[opponentPlayerIndex].card}/>}
-                <div className="score desktop-view">score: {gameState.players[opponentPlayerIndex].score}</div>
+                <div className="score desktop-view">{gameState.players[opponentPlayerIndex].score}</div>
             </div>
             <div className="deck-of-cards" id="deck-of-cards">
                 {lastMove ? null : <div className="deck-shadow" style={{ transform: `translate(calc(${shadow}px + 0.7px))` }} ></div>}
@@ -93,11 +93,11 @@ function GameInProgress({ socket, player, gameState }) {
                 <Card card={animationCard} className={`animation ${animation}`} />
             </div>
             <div className="main-player" id="main-player">
-                <div className="name desktop-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
+                <div className="name desktop-view">{gameState.players[mainPlayerIndex].name}</div>
                 {animation === 'down' ? <Card card={oldCard}/> : <Card card={gameState.players[mainPlayerIndex].card}/>}
                 <div className="mobile-view-group">
-                    <div className="name mobile-view">Your name - {gameState.players[mainPlayerIndex].name}</div>
-                    <div className="score">score: {gameState.players[mainPlayerIndex].score}</div>
+                    <div className="name mobile-view">{gameState.players[mainPlayerIndex].name}</div>
+                    <div className="score">{gameState.players[mainPlayerIndex].score}</div>
                 </div>
             </div>
         </div>

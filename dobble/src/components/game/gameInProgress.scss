@@ -43,18 +43,26 @@ $phone: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 40px;
-            width: 140px;
+            height: 30px;
+            width: 130px;
             background-color: #AC7DB5;
             border: $black-border;
+            border-radius: 20px;
+            padding: 5px;
             margin: 10px;
 
             @media screen and (max-width: $phone) {
-                height: 30px;
-                width: 120px;
+                height: 20px;
+                width: 85px;
                 font-size: 12px;
                 margin: 5px;
             }
+        }
+
+        .name {
+            word-break: break-all;
+            overflow: hidden;
+            text-align: center;
         }
 
         .mobile-view {
@@ -94,6 +102,14 @@ $phone: 500px;
     }
 
     .main-player {
+
+        .name,
+        .score {
+            border-color: yellow;
+            color: yellow;
+            font-weight: 600;
+        }
+
         @media screen and (max-width: $phone) {
             align-items: flex-end;
             padding-bottom: 10px;
@@ -147,13 +163,13 @@ $phone: 500px;
             position: relative;
             --direction: -30.5vh;
             animation: cardMove 0.7s ease-in-out;
-            
+
             @media screen and (max-width: $phone) {
                 --direction: -29.8vh;
             }
-            
+
         }
-        
+
         .animation.down {
             display: block;
             position: relative;
